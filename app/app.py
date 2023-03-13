@@ -31,9 +31,17 @@ async def update_user(user_id):
     await db.execute(query, values={'name': data['name'], 'points': data['points'], 'id': user_id})
     return '', 204
 
-@app.route('/users/<int:user_id>', methods=['DELETE'])
-async def delete_user(user_id):
-    query = 'DELETE FROM users WHERE id = :id'
-    await db.execute(query, values={'id': user_id})
-    return '', 204
-
+@app.route('/users/<name>', methods=['DELETE', 'OPTIONS'])
+async def delete_user(name):
+    if request.method == 'DELETE':
+        query = 'DELETE FROM users WHERE name = :name'
+        await db.execute(query, values={'name': name})
+        return jsonify({'message': f'User {name} deleted'}), 200
+    else:
+        # handle the preflight request
+        headers = {
+            'Access-Control-Allow-Methods': 'DELETE',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': '*'
+        }
+        return ('', 204, headers)

@@ -53,7 +53,7 @@ function App() {
 
   return (
     <div>
-      <h1>Retrieve Points from User by Name</h1>
+      <h1>Search User</h1>
       <div>
         <label>Name: </label>
         <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
