@@ -8,7 +8,6 @@ function App() {
     const response = await fetch(`http://127.0.0.1:5000/users?name=${name}`);
     const data = await response.json();
     setPoints(null);
-    console.log(data)
     if (data.length > 0) {
       const user = data.find(u => u.name === name);
       if (user) {
